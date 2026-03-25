@@ -1,4 +1,4 @@
-FROM gcr.io/google-appengine/nodejs
+FROM node:16
 WORKDIR /grid
 RUN git clone https://github.com/k8robotics/launchpad-test.git /grid
 RUN rm apps/grid
