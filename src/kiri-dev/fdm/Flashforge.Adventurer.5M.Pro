@@ -1,6 +1,6 @@
 {
     "mode": "FDM",
-	"device-image": "img/flashforgead5mpro.png",
+	"device-image": "web/kiri/img/flashforgead5mpro.png",
     "internal": 0,
     "bedHeight": 2.5,
     "bedWidth": 220,
