@@ -1,3 +1,61 @@
+# Launchpad 3D — Forward Education Fork of Kiri:Moto
+
+This repository is [Forward Education](https://forwardedu.com)'s fork of
+[Grid.Space's `grid-apps` / Kiri:Moto](https://github.com/GridSpace/grid-apps),
+a browser-based slicer. It adds classroom-oriented device profiles and, most
+recently, **multi-toolhead / multi-color support for Flashforge printers**.
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of fork changes. Upstream
+documentation continues below.
+
+## Flashforge multi-tool devices
+
+| Device | Type | Build volume | Tools |
+|---|---|---|---|
+| Flashforge Creator 5 Pro | 4-head **toolchanger** (FlashSwap) | 256 × 256 × 256 mm | `T0`–`T3`, physical head swap |
+| Flashforge Adventurer 5X | Single nozzle + **4-color filament station** | 220 × 220 × 220 mm | `T0`–`T3`, filament unload/load + purge |
+| Flashforge Adventurer 5M Pro | Single extruder | 220 × 220 × 220 mm | `T0` |
+
+Profiles live in [`src/kiri-dev/fdm/`](src/kiri-dev/fdm/). Reference G-code
+sliced from each multi-tool profile is committed at the repo root
+(`flashforge-creator-5-pro-sample.gcode`, `flashforge-ad5x-sample.gcode`).
+
+### Assigning colors / toolheads
+
+Color/tool assignment is **per object** (Kiri:Moto does not paint regions
+within a single mesh):
+
+1. Pick the device (e.g. *Flashforge Creator 5 Pro*) in the device selector.
+2. Import one mesh per color.
+3. Select an object — a row of numbered buttons (**0–3**, one per toolhead)
+   appears because the device declares multiple extruders. Click the number
+   for the toolhead loaded with that color.
+4. *(Optional)* point support material at a dedicated toolhead via the support
+   **Nozzle** setting.
+5. Slice and export — tool changes (`T0`–`T3`) are emitted between objects.
+
+### ⚠️ Validation before printing
+
+These profiles are **best-effort**. Kiri:Moto has no wipe-tower engine like
+OrcaSlicer's, so multi-color purge quality (especially on the AD5X) needs
+tuning on the machine, and the Creator 5 Pro toolchanger swap is unverified
+against real hardware. **Diff each profile against a real slicer export for
+that exact machine** before sending a job to the printer. See the *Known
+limitations* section of [CHANGELOG.md](CHANGELOG.md).
+
+### Running this fork locally
+
+```
+npm i
+npm install -g @gridspace/app-server
+gs-app-server --debug
+```
+
+Then open [localhost:8080/kiri](http://localhost:8080/kiri). (Full upstream
+run/build instructions are below.)
+
+---
+
 ## Grid.Space Web Applications
 
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fgrid.space%2F)](https://grid.space/kiri/)
